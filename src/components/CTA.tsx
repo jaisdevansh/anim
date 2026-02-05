@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight, UtensilsCrossed, Crown } from 'lucide-react';
+import { ArrowRight, UtensilsCrossed } from 'lucide-react';
 import Link from 'next/link';
 
 const CTA = () => {
@@ -38,28 +38,28 @@ const CTA = () => {
                     </h2>
 
                     <p className="text-xl text-white/50 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-                        Don't just eat pizza. Experience a legacy of flavor perfection, delivered right to your throne.
+                        Don&apos;t just eat pizza. Experience a legacy of flavor perfection, delivered right to your throne.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                         <Link href="/menu" className="w-full sm:w-auto">
-                            <motion.button
+                            <motion.div
                                 whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(177, 18, 38, 0.4)' }}
                                 whileTap={{ scale: 0.95 }}
                                 className="w-full sm:w-auto bg-[#B11226] text-white px-10 py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 transition-all"
                             >
                                 View Our Menu <ArrowRight size={24} />
-                            </motion.button>
+                            </motion.div>
                         </Link>
 
                         <Link href="/contact" className="w-full sm:w-auto">
-                            <motion.button
+                            <motion.div
                                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.05)' }}
                                 whileTap={{ scale: 0.95 }}
                                 className="w-full sm:w-auto border border-white/10 px-10 py-5 rounded-2xl font-bold text-xl text-white backdrop-blur-sm transition-all"
                             >
                                 Contact Support
-                            </motion.button>
+                            </motion.div>
                         </Link>
                     </div>
 

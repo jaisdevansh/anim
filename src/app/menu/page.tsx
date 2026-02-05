@@ -2,8 +2,9 @@
 
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, ShoppingBag, Plus, Filter, ChevronRight } from 'lucide-react';
+import { Search, X, Plus } from 'lucide-react';
 import React, { useState, useMemo } from 'react';
 
 // --- Types ---
@@ -53,7 +54,7 @@ const ProductModal = ({ item, onClose }: { item: MenuItem, onClose: () => void }
                 <X size={24} />
             </button>
             <div className="w-full md:w-1/2 h-64 md:h-auto relative">
-                <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" />
+                <Image src={item.image} alt={item.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F0F] to-transparent opacity-60 md:hidden" />
             </div>
             <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col">
@@ -180,10 +181,12 @@ export default function MenuPage() {
                             >
                                 {/* Image Container */}
                                 <div className="aspect-[4/3] overflow-hidden relative">
-                                    <img
+                                    <Image
                                         src={item.image}
                                         alt={item.name}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                        fill
+                                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
                                     />
                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                         <span className="bg-white/10 backdrop-blur-md text-white px-6 py-2 rounded-full text-sm font-bold border border-white/20 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">

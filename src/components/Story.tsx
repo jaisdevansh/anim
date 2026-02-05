@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Crown } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Story = () => {
     const sectionRef = useRef<HTMLElement>(null);
@@ -24,20 +25,24 @@ const Story = () => {
                     {/* Visual Side */}
                     <div className="w-full lg:w-1/2 grid grid-cols-2 gap-4 relative">
                         <motion.div style={{ y: y1 }} className="pt-20">
-                            <div className="aspect-[3/4] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                                <img
+                            <div className="aspect-[3/4] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative">
+                                <Image
                                     src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?q=80&w=1976&auto=format&fit=crop"
                                     alt="The Craft"
-                                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                                    fill
+                                    className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                             </div>
                         </motion.div>
                         <motion.div style={{ y: y2 }}>
-                            <div className="aspect-[3/4] rounded-3xl overflow-hidden border border-white/10 shadow-2xl mb-4">
-                                <img
+                            <div className="aspect-[3/4] rounded-3xl overflow-hidden border border-white/10 shadow-2xl mb-4 relative">
+                                <Image
                                     src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=2070&auto=format&fit=crop"
                                     alt="The Ingredients"
-                                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                                    fill
+                                    className="object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                             </div>
                             <div className="p-8 bg-[#B11226] rounded-3xl text-center">
@@ -79,13 +84,13 @@ const Story = () => {
 
                         <div className="pt-10">
                             <Link href="/about">
-                                <motion.button
+                                <motion.div
                                     whileHover={{ x: 10 }}
                                     className="flex items-center gap-4 text-white font-bold group"
                                 >
                                     Read Full Journey
                                     <span className="w-12 h-px bg-[#B11226] group-hover:w-20 transition-all duration-500" />
-                                </motion.button>
+                                </motion.div>
                             </Link>
                         </div>
                     </div>

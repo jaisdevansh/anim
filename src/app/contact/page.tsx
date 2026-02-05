@@ -3,9 +3,8 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 
 // --- Components ---
 
@@ -64,7 +63,7 @@ const RadioGroup = ({ label, options }: { label: string, options: string[] }) =>
     </div>
 );
 
-const ContactItem = ({ icon: Icon, title, value, href }: { icon: any, title: string, value: string, href?: string }) => (
+const ContactItem = ({ icon: Icon, title, value, href }: { icon: React.ElementType, title: string, value: string, href?: string }) => (
     <motion.div
         variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
         className="flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors group cursor-pointer"

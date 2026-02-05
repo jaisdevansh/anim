@@ -3,34 +3,46 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChefHat, ShieldCheck, Clock, Crown, ArrowRight, Star } from 'lucide-react';
-import React, { useRef } from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { ShieldCheck, Clock, Crown, ArrowRight, Star } from 'lucide-react';
+import React from 'react';
 
 // --- Animated Background ---
-const BackgroundParticles = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-            <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-[#FFB703] rounded-full opacity-20"
-                initial={{
-                    x: Math.random() * 1000,
-                    y: Math.random() * 1000
-                }}
-                animate={{
-                    y: [0, -100],
-                    opacity: [0.2, 0]
-                }}
-                transition={{
-                    duration: Math.random() * 5 + 5,
-                    repeat: Infinity,
-                    ease: "linear"
-                }}
-            />
-        ))}
-    </div>
-);
+// --- Animated Background ---
+const BackgroundParticles = () => {
+    // Generate deterministic values for particles to avoid impure render errors
+    const particles = [...Array(20)].map((_, i) => ({
+        id: i,
+        x: (i * 47) % 1000,
+        y: (i * 73) % 1000,
+        duration: ((i * 13) % 5) + 5
+    }));
+
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {particles.map((p) => (
+                <motion.div
+                    key={p.id}
+                    className="absolute w-1 h-1 bg-[#FFB703] rounded-full opacity-20"
+                    initial={{
+                        x: p.x,
+                        y: p.y
+                    }}
+                    animate={{
+                        y: [0, -100],
+                        opacity: [0.2, 0]
+                    }}
+                    transition={{
+                        duration: p.duration,
+                        repeat: Infinity,
+                        ease: "linear"
+                    }}
+                />
+            ))}
+        </div>
+    );
+};
 
 // --- Components ---
 
@@ -125,7 +137,7 @@ export default function AboutPage() {
                         THE SAGA OF <br /><span className="text-[#B11226]">TASTE</span>
                     </h1>
                     <p className="text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
-                        From a humble stone oven to the city's favorite slice. <br />This is not just pizza, it's a legacy.
+                        From a humble stone oven to the city&apos;s favorite slice. <br />This is not just pizza, it&apos;s a legacy.
                     </p>
                 </motion.div>
             </section>
@@ -144,14 +156,16 @@ export default function AboutPage() {
                         <div className="relative group">
                             <div className="absolute -inset-4 bg-gradient-to-r from-[#B11226] to-[#FFB703] rounded-[2rem] opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-700" />
                             <div className="aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10 relative">
-                                <img
+                                <Image
                                     src="https://images.unsplash.com/photo-1556910103-1c02745a30bf?q=80&w=2070&auto=format&fit=crop"
-                                    className="w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-1000 grayscale group-hover:grayscale-0"
+                                    className="object-cover scale-100 group-hover:scale-110 transition-transform duration-1000 grayscale group-hover:grayscale-0"
                                     alt="Founder"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
                                 <div className="absolute bottom-8 left-8">
-                                    <h3 className="text-3xl font-bold text-white mb-2">Rajesh 'The Boss'</h3>
+                                    <h3 className="text-3xl font-bold text-white mb-2">Rajesh &apos;The Boss&apos;</h3>
                                     <p className="text-[#FFB703] font-mono text-sm tracking-widest">FOUNDER & CHEF</p>
                                 </div>
                             </div>
@@ -165,13 +179,13 @@ export default function AboutPage() {
                             transition={{ duration: 0.8 }}
                         >
                             <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
-                                "Pizza is not just food. It's <span className="text-[#B11226] italic">emotion</span>."
+                                &quot;Pizza is not just food. It&apos;s <span className="text-[#B11226] italic">emotion</span>.&quot;
                             </h2>
                             <p className="text-white/70 text-lg leading-relaxed mb-6 border-l-2 border-[#B11226] pl-6">
-                                I started Maharaja Pizza with a simple dream: to serve the kind of pizza that makes people close their eyes and smile. We don't cut corners. We chop fresh vegetables. We knead dough daily. We respect the fire.
+                                I started Maharaja Pizza with a simple dream: to serve the kind of pizza that makes people close their eyes and smile. We don&apos;t cut corners. We chop fresh vegetables. We knead dough daily. We respect the fire.
                             </p>
                             <p className="text-white/70 text-lg leading-relaxed">
-                                Every box that leaves this kitchen carries my reputation. That's why I personally taste-test our sauces every single morning.
+                                Every box that leaves this kitchen carries my reputation. That&apos;s why I personally taste-test our sauces every single morning.
                             </p>
                         </motion.div>
                     </div>
@@ -249,13 +263,13 @@ export default function AboutPage() {
                     </p>
 
                     <Link href="/menu" className="relative z-10 inline-block">
-                        <motion.button
+                        <motion.div
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="bg-[#B11226] text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-[#D4152D] hover:shadow-[0_0_40px_rgba(177,18,38,0.5)] transition-all duration-300 flex items-center gap-4"
+                            className="bg-[#B11226] text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-[#D4152D] hover:shadow-[0_0_40px_rgba(177,18,38,0.5)] transition-all duration-300 flex items-center gap-4 cursor-pointer"
                         >
                             Order Your Slice <ArrowRight size={24} />
-                        </motion.button>
+                        </motion.div>
                     </Link>
                 </motion.div>
             </section>

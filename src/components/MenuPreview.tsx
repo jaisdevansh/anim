@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronRight, ArrowUpRight } from 'lucide-react';
 
 const pizzas = [
@@ -89,20 +90,29 @@ const MenuPreview = () => {
             <div className="h-[50vh] flex flex-col items-center justify-center gap-10">
                 <p className="text-white/20 text-xl font-light italic">And many more surprises waiting for you...</p>
                 <Link href="/menu">
-                    <motion.button
+                    <motion.div
                         whileHover={{ scale: 1.05, boxShadow: '0 0 50px rgba(177, 18, 38, 0.3)' }}
                         whileTap={{ scale: 0.95 }}
                         className="group inline-flex items-center gap-6 bg-white text-black px-16 py-6 rounded-2xl font-black uppercase tracking-[0.2em] text-sm hover:bg-[#B11226] hover:text-white transition-all duration-700 shadow-2xl"
                     >
                         Enter the Full Throne <ChevronRight size={24} className="group-hover:translate-x-2 transition-transform" />
-                    </motion.button>
+                    </motion.div>
                 </Link>
             </div>
         </section>
     );
 };
 
-const PizzaCard = ({ pizza, index }: { pizza: any, index: number }) => {
+interface PizzaType {
+    id: number;
+    name: string;
+    price: string;
+    image: string;
+    label: string;
+    color: string;
+}
+
+const PizzaCard = ({ pizza, index }: { pizza: PizzaType, index: number }) => {
     const cardRef = React.useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: cardRef,
@@ -135,13 +145,14 @@ const PizzaCard = ({ pizza, index }: { pizza: any, index: number }) => {
                     {/* Visual Half */}
                     <div className="w-full md:w-1/2 h-full relative">
                         <motion.div
-                            className="w-full h-full rounded-[2rem] overflow-hidden shadow-2xl"
+                            className="w-full h-full rounded-[2rem] overflow-hidden shadow-2xl relative"
                         >
-                            <img
+                            <Image
                                 src={pizza.image}
                                 alt={pizza.name}
-                                loading="lazy"
-                                className="w-full h-full object-cover transform-gpu"
+                                fill
+                                className="object-cover transform-gpu"
+                                sizes="(max-width: 768px) 100vw, 50vw"
                             />
                             <div className="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent" />
                         </motion.div>

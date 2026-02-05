@@ -25,7 +25,14 @@ const reviews = [
     }
 ];
 
-const ReviewCard = ({ review, index }: { review: any, index: number }) => (
+interface ReviewType {
+    name: string;
+    role: string;
+    text: string;
+    rating: number;
+}
+
+const ReviewCard = ({ review, index }: { review: ReviewType, index: number }) => (
     <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -42,7 +49,7 @@ const ReviewCard = ({ review, index }: { review: any, index: number }) => (
         </div>
 
         <p className="text-xl text-white/70 font-light leading-relaxed mb-10 italic">
-            "{review.text}"
+            &quot;{review.text}&quot;
         </p>
 
         <div className="flex items-center gap-4">
