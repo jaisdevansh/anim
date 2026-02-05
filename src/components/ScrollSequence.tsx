@@ -1,15 +1,20 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
+import { FRAME_COUNT } from '@/lib/constants';
 
-const FRAME_COUNT = 240;
+interface ScrollSequenceProps {
+    images: HTMLImageElement[];
+}
 
-export default function ScrollSequence() {
+export default function ScrollSequence({ images }: ScrollSequenceProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [images, setImages] = useState<HTMLImageElement[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+
+    // If images aren't ready yet, we might want to return null or an empty placeholder 
+    // to avoid canvas errors, although the parent handles the "loading" view.
+    // We'll proceed assuming images might be partial or full, but relying on parent to hide us if empty.
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -18,25 +23,6 @@ export default function ScrollSequence() {
 
     // Map scroll progress (0 to 1) to frame index (1 to 240)
     const frameIndex = useTransform(scrollYProgress, [0, 1], [1, FRAME_COUNT]);
-
-    // Preload images
-    useEffect(() => {
-        const loadedImages: HTMLImageElement[] = [];
-        let loadedCount = 0;
-
-        for (let i = 1; i <= FRAME_COUNT; i++) {
-            const img = new Image();
-            img.src = `/images/sequence/ezgif-frame-${i.toString().padStart(3, '0')}.jpg`;
-            img.onload = () => {
-                loadedCount++;
-                if (loadedCount === FRAME_COUNT) {
-                    setIsLoading(false);
-                }
-            };
-            loadedImages.push(img);
-        }
-        setImages(loadedImages);
-    }, []);
 
     // Draw frame on canvas when scroll position changes
     useEffect(() => {
@@ -104,13 +90,6 @@ export default function ScrollSequence() {
     return (
         <div ref={containerRef} className="relative h-[400vh] w-full bg-[#050505]">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
-                {isLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center z-10 bg-[#050505]">
-                        <div className="text-[#B11226] font-mono text-xl animate-pulse">
-                            PREPARING THE REVEAL...
-                        </div>
-                    </div>
-                )}
                 <canvas
                     ref={canvasRef}
                     className="h-full w-full object-cover"
